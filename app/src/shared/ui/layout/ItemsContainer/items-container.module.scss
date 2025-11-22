@@ -1,0 +1,32 @@
+.wrapper {}
+
+.header {
+
+    &-title {}
+
+    &-text {}
+
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    gap: calcFluid(10, 15);
+
+    &-item {
+
+        &--1 {
+            flex: 1 0 100%;
+        }
+
+        &--2 {
+            flex: 1 0 47%;
+
+            @include mxw_1024 {
+                flex: 1 0 90%;
+            }
+        }
+    }
+}

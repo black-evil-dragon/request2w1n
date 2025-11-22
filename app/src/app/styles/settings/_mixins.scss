@@ -1,0 +1,155 @@
+@use 'sass:map';
+
+@use './variables' as *;
+@use './functions' as *;
+
+
+//* THEME
+@mixin theme($type: "page") {
+    @each $theme, $colors in $theme-colors {
+        [data-theme="#{$theme}"] & {
+            color: map.get($colors, "text");
+            background-color: map.get($colors, $type);
+        }
+    }
+}
+
+// Если честно, я офигел, что так можно, прикольно
+@mixin theme-text-color($alpha: 1.0) {
+    @each $theme, $colors in $theme-colors {
+        [data-theme="#{$theme}"] & {
+            color: rgba($color: theme-color("text", $theme), $alpha: $alpha);
+        }
+    }
+}
+
+@mixin theme-color($property, $type: 'text', $alpha: 1.0) {
+    @each $theme, $colors in $theme-colors {
+        [data-theme="#{$theme}"] & {
+            #{$property}: rgba($color: theme-color($type, $theme), $alpha: $alpha);
+        }
+    }
+}
+
+
+//* FONT
+@mixin font-h1 {
+    font-weight: 600;
+    font-size: calcFluid(27, 53);
+}
+
+@mixin font-h2 {
+    font-weight: 600;
+    font-size: calcFluid(24, 45);
+}
+
+@mixin font-h3 {
+    font-weight: 500;
+    font-size: calcFluid(24, 32);
+}
+
+@mixin font-h4 {
+    font-weight: 700;
+    font-size: calcFluid(14, 24);
+}
+
+@mixin font-p {
+    font-size: calcFluid(14, 16);
+}
+
+@mixin font-big {
+    font-size: calcFluid(16, 18);
+}
+
+@mixin font-small {
+    font-size: calcFluid(12, 14);
+}
+
+@mixin font-color {
+    color: $color-primary;
+}
+
+
+//* MEDIA
+@mixin mxw_1920 {
+    @media screen and (max-width: 1921px) {
+        @content;
+    }
+}
+
+@mixin mxw_1440 {
+    @media screen and (max-width: 1441px) {
+        @content;
+    }
+}
+
+@mixin mxw_1280 {
+    @media screen and (max-width: 1280px) {
+        @content;
+    }
+}
+
+
+@mixin mxw_1080 {
+    @media screen and (max-width: 1081px) {
+        @content;
+    }
+}
+
+@mixin mxw_1024 {
+    @media screen and (max-width: 1025px) {
+        @content;
+    }
+}
+
+
+@mixin mxw_576 {
+    @media screen and (max-width: 577px) {
+        @content;
+    }
+}
+
+@mixin mxw_425 {
+    @media screen and (max-width: 426px) {
+        @content;
+    }
+}
+
+@mixin mxw_360 {
+    @media screen and (max-width: 361px) {
+        @content;
+    }
+}
+
+
+/* ___________________________________________
+* 			Вспомогательные миксины
+* _____________________________________________
+*/
+
+
+
+
+
+@mixin smooth-underline() {
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 1px;
+    transition: background-size $transition-time, color $transition-time ease-in-out;
+
+
+    &:hover,
+    &:active {
+        &:not(.font--no-underline) {
+            background-size: 100% 1px;
+
+            @content;
+        }
+    }
+
+    @include mxw_1024 {
+        transition: background-size 0s, color $transition-time ease-in-out;
+    }
+}

@@ -1,0 +1,29 @@
+@use './settings/reset';
+@use './settings/font';
+
+
+
+body {
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: calcFluid(14, 16);
+
+    @include theme;
+
+    #root {
+        min-height: 100vh;
+        display: flex;
+        justify-content: start;
+        flex-direction: column;
+
+        .app {
+
+            &-content {
+                flex: 1;
+            }
+        }
+    }
+}

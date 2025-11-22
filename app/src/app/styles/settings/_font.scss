@@ -1,0 +1,47 @@
+@use './variables' as *;
+@use './mixins' as *;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+
+
+
+
+.font {
+    &-h1 {
+        @include font-h1;
+    }
+
+    &-h2 {
+        @include font-h2;
+    }
+
+    &-h3 {
+        @include font-h3;
+    }
+
+    &-h4 {
+        @include font-h4;
+    }
+
+    &-link {
+        color: inherit;
+
+        @include smooth-underline {
+            color: $color-primary;
+        }
+    }
+
+
+    &-color {
+        @include font-color;
+    }
+}
+
+a {
+    color: inherit;
+
+    @include smooth-underline {
+        color: $color-primary;
+    }
+}

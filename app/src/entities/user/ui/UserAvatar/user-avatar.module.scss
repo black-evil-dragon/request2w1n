@@ -1,0 +1,23 @@
+.wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+
+    padding: calcFluid(0, 5);
+
+    .image {
+        aspect-ratio: 1;
+        object-fit: cover;
+        object-position: center;
+
+        width: calcFluid(30, 50);
+        height: calcFluid(30, 50);
+
+        border-radius: 100%;
+
+        &-placeholder {
+            background-color: #fff;
+        }
+    }
+
+}

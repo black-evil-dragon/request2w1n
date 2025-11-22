@@ -1,0 +1,36 @@
+.page {
+    &-container {
+        max-width: calcFluid(350, 1600);
+
+        margin-left: auto;
+        margin-right: auto;
+
+        @include mxw_576 {
+            max-width: calcFluid(350, 500, $max-vw: 576px);
+
+            padding-left: calcFluid(10, 15);
+            padding-right: calcFluid(10, 15);
+        }
+    }
+}
+
+.section {
+    &-indent {
+        margin-bottom: calcFluid(30, 90);
+    }
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+
+    gap: calcFluid(10, 15);
+
+    padding: calcFluid(15, 25) calcFluid(10, 15);
+
+
+    border-radius: $border-radius;
+
+    @include theme("element");
+}
