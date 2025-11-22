@@ -1,0 +1,33 @@
+.wrapper {
+    width: 100%;
+
+    .container {
+        margin: calcFluid(15, 30) 0;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: calcFluid(10, 25);
+
+        @include font-color;
+        @include font-h1;
+
+        &-title {
+            width: fit-content;
+
+            @include font-color;
+            @include font-h1;
+
+            @include mxw_576 {
+                width: 80%;
+            }
+        }
+    }
+
+
+    .text {
+        @include theme-text-color(.5);
+    }
+}
