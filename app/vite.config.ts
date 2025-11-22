@@ -11,6 +11,17 @@ const DEBUG = process.env.NODE_ENV == 'development';
 
 // https://vite.dev/config/
 export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    hmr: {
+      clientPort: 5173
+    },
+    watch: {
+      usePolling: true,
+      interval: 1000
+    }
+  },
 
   resolve: {
     alias: {
