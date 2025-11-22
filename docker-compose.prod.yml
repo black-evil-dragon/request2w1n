@@ -25,7 +25,7 @@ services:
       - "80:80"
     depends_on:
       - frontend-build
-      # - api
+      - api
 
 
   # * BACK
