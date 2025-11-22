@@ -12,59 +12,34 @@ services:
   nginx:
     image: nginx:stable-alpine
 
+    volumes:
+      - './nginx/nginx.conf:/etc/nginx/nginx.conf'
+  
+    environment:
+      - NGINX_MODE=development
+  
     networks:
       - app-network
 
     ports:
       - "80:80"
-  
-    volumes:
-      - './nginx.conf:/etc/nginx/nginx.conf'
-    
-    environment:
-      - NGINX_MODE=development
-  
     depends_on:
-      - frontend-dev
+      - frontend-build
       # - api
 
 
   # * BACK
-  # api:
-  #   build: .
-  #   ports:
-  #     - "8080:8080"
-
-  #   networks:
-  #     - app-network
-
-
-  # * FRONT
-  frontend-dev:
-    volumes:
-      - ./app:/app
-      - node_modules_volume:/app/node_modules
-
-    build:
-      context: ./app
-      dockerfile: Dockerfile
-      target: development
-
+  api:
+    build: .
     ports:
-      - "5173:5173"
-
-    environment:
-      NODE_ENV: development
-
-  frontend-build:
-    profiles: [production]
+      - "8080:8080"
 
     networks:
       - app-network
 
-    ports:
-      - "3000:3000"
 
+  # * FRONT
+  frontend-build:
     build:
       context: ./app
       dockerfile: Dockerfile
@@ -72,3 +47,9 @@ services:
 
     environment:
       NODE_ENV: production
+
+    networks:
+      - app-network
+
+    ports:
+      - "3000:3000"
