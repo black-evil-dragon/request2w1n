@@ -6,6 +6,8 @@ COPY . .
 
 RUN ./mvnw clean package -DskipTests
 
+
+
 FROM eclipse-temurin:21-jre-jammy AS extractor
 
 WORKDIR /app
