@@ -17,7 +17,6 @@ public class SecurityConfig {
 
                 )
 
-                // Временное решение
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable);
