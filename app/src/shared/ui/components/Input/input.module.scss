@@ -1,0 +1,93 @@
+.wrapper {
+    position: relative;
+    z-index: $z-element;
+
+}
+
+.label {
+    pointer-events: none;
+
+    position: absolute;
+    z-index: $z-labels;
+
+    @include theme-text-color(.5);
+
+    transition: all $tr-time ease-in-out;
+
+    &--required {
+        margin-left: calcFluid(5, 5);
+        @include font-small;
+        color: $color-danger;
+    }
+
+    &--moved {
+        transform: translate(0, -100%);
+        font-size: calcFluid(10, 12);
+    }
+}
+
+.input {
+    // reset
+    min-width: 0;
+    font-size: inherit;
+    appearance: none;
+    border: none;
+    background: none;
+
+
+    padding: calcFluid(5, 5) calcFluid(10, 15);
+
+
+    // Text
+    @include theme-text-color();
+
+    // Design
+    background-image: linear-gradient($color-primary, $color-primary);
+    background-position: 0% 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 2px;
+
+    transition: background-size $transition-time, color $transition-time ease-in-out;
+
+    &:focus,
+    &--has-value {
+        outline: none;
+
+        background-size: 100% 2px;
+    }
+
+}
+
+
+.message {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    z-index: $z-labels;
+
+    // Text
+    font-size: calcFluid(10, 12);
+
+
+    transition: transform $tr-time ease-in-out, opacity $tr-time ease-in-out;
+    opacity: 0;
+
+
+    &--show {
+        opacity: 1;
+        transform: translate(0, -100%);
+    }
+}
+
+.danger {
+    color: $color-danger;
+}
+
+.info {
+    color: $color-primary;
+}
+
+.warning {
+    color: $color-warning;
+}

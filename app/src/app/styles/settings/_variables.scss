@@ -1,3 +1,7 @@
+$color-danger: #ba2025; // Ха, да отсылка к 2025 году
+$color-warning: #ffbb10;
+
+
 $color-white: #fff;
 $color-black: #000;
 
@@ -14,11 +18,15 @@ $text-opacity-light: 0.35;
 
 
 $transition-time: .33s;
+$tr-time: $transition-time;
 
 $border-width: 1px;
 $border-radius: 14px;
 
 $z-modals: 1000;
+
+$z-element: 500;
+$z-labels: 600;
 
 
 $theme-colors: (

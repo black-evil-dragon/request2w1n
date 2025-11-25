@@ -33,6 +33,11 @@
             background-color $transition-time ease-in-out;
 
         svg {
+            width: 100%;
+            height: 100%;
+
+            padding: calcFluid(5, 10);
+
             @include theme-color("fill", "text");
             transition: fill $transition-time ease-in-out;
         }

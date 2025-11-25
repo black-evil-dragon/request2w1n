@@ -4,7 +4,10 @@
 @use './functions' as *;
 
 
-//* THEME
+/* ___________________________________________
+* 			        THEME
+* _____________________________________________
+*/
 @mixin theme($type: "page") {
     @each $theme, $colors in $theme-colors {
         [data-theme="#{$theme}"] & {
@@ -32,7 +35,11 @@
 }
 
 
-//* FONT
+
+/* ___________________________________________
+* 			        FONT
+* _____________________________________________
+*/
 @mixin font-h1 {
     font-weight: 600;
     font-size: calcFluid(27, 53);
@@ -122,15 +129,11 @@
 }
 
 
+
 /* ___________________________________________
 * 			Вспомогательные миксины
 * _____________________________________________
 */
-
-
-
-
-
 @mixin smooth-underline() {
     text-decoration: none;
     background-image: linear-gradient(currentColor, currentColor);
@@ -152,4 +155,79 @@
     @include mxw_1024 {
         transition: background-size 0s, color $transition-time ease-in-out;
     }
+}
+
+
+@mixin no-underline() {
+    background-image: none !important;
+    background-size: 0% 0px !important;
+
+    &:hover,
+    &:active {
+        background-image: none !important;
+        background-size: 0% 0px !important;
+    }
+}
+
+
+
+
+/* ___________________________________________
+* 			        BUTTONS
+* _____________________________________________
+*/
+
+@mixin button-default($border-radius: $border-radius,
+
+    $size: "default",
+) {
+    $sizes: (
+        "default": calcFluid(10, 10) calcFluid(27, 37),
+    );
+
+    cursor: pointer;
+
+    // display and layout
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: map.get($sizes, $size);
+
+
+    // text
+    text-decoration: none;
+
+
+    // Design
+    border-radius: $border-radius;
+
+
+    // Animation and mod-s
+    transition: all $tr-time ease-in-out;
+    @include no-underline;
+
+    @content;
+}
+
+@mixin button-background($border-color: $color-primary,
+    $background-color: $color-primary,
+    $text-color: $color-white,
+
+    $border-color-hover: $color-white,
+    $background-color-hover: $color-white,
+    $text-color-hover: $color-primary,
+) {
+    border-color: $border-color;
+    background-color: $background-color;
+    color: $text-color;
+
+    &:hover,
+    &:active {
+        border-color: $border-color-hover;
+        background-color: $background-color-hover;
+        color: $text-color-hover;
+    }
+
+    @content;
 }

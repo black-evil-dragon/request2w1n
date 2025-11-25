@@ -32,9 +32,13 @@
         }
     }
 
-
     &-color {
         @include font-color;
+    }
+
+
+    &--no-underline {
+        @include no-underline;
     }
 }
 
