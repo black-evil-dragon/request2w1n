@@ -1,11 +1,11 @@
 import { Link, Navigate, Outlet, Route, Routes } from "react-router-dom"
 import classNames from "classnames";
 
-
+import { SignInForm, SignUpForm } from "@features/auth";
 import { ThemeSwitcher } from "@features/theme";
 
 import styles from "./auth-page.module.scss"
-import { SignInForm } from "@features/auth/ui/SignInForm";
+
 import buttonStyles from "@styles/modules/button.module.scss";
 
 const AuthLayout = () => {
@@ -41,7 +41,7 @@ export const AuthRouting = () => {
             <Route path="" element={<AuthLayout />}>
                 <Route path="" element={<AuthHome />} />
                 <Route path="signin" element={<SignInForm />} />
-                <Route path="signup" element={<AuthHome />} />
+                <Route path="signup" element={<SignUpForm />} />
             </Route>
 
 

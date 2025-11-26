@@ -5,10 +5,11 @@ import classNames from "classnames";
 
 
 import { Input, type InputMessageType } from "@shared/ui/components/Input"
+import { ProgressBarLine, useProgress } from "@shared/ui/progress";
 
-
-import styles from './sign-in.module.scss'
+import styles from '../styles/form.module.scss'
 import buttonStyles from "@styles/modules/button.module.scss";
+
 
 
 export const SignInForm = () => {
@@ -16,30 +17,9 @@ export const SignInForm = () => {
     const [password, setPassword] = useState<string>("");
     const [messages, setMessages] = useState<{ [input: string]: InputMessageType }>({});
 
-    const [isLoading, setLoading] = useState(false);
-    const [progress, setProgress] = useState(0);
+    const {progress, isLoading, startProgress} = useProgress()
 
 
-    const startProgress = () => {
-        setProgress(-25)
-
-        const interval = setInterval(() => {
-            setProgress(prev => {
-                if (prev >= 100) {
-                    clearInterval(interval);
-                    const timeout = setTimeout(() => {
-                        setLoading(false)
-
-                        clearTimeout(timeout)
-                    }, 300)
-                    return 100;
-                }
-                return prev + .5;
-            });
-        }, 1);
-
-
-    }
 
     const handleSubmit = () => {
         if (!login || !password) {
@@ -65,7 +45,6 @@ export const SignInForm = () => {
             return
         }
 
-        setLoading(true)
         startProgress()
     }
 
@@ -73,8 +52,8 @@ export const SignInForm = () => {
     return (<>
         <div className={styles.wrapper}>
             <div className={classNames(styles.title, "font-h1 font-color")}>Войти</div>
-            
-            <div className={classNames(styles.progress, (isLoading) && styles.progressShow)} style={{backgroundSize: `${progress}% 2px`}}></div>
+
+            <ProgressBarLine progress={progress} isLoading={isLoading} />
             
             <div className={classNames(styles.form, isLoading && styles.formLoading)}>
                 <Input
