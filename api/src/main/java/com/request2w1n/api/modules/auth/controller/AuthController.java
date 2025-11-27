@@ -1,10 +1,9 @@
 package com.request2w1n.api.modules.auth.controller;
 
 
-import com.request2w1n.api.modules.auth.controller.model.LoginRequest;
-import com.request2w1n.api.modules.auth.controller.model.UserEntity;
-import com.request2w1n.api.modules.auth.controller.repositories.UserRepository;
-import com.request2w1n.api.modules.auth.controller.services.UserService;
+import com.request2w1n.api.modules.auth.model.LoginRequest;
+import com.request2w1n.api.modules.auth.model.UserEntity;
+import com.request2w1n.api.modules.auth.repositories.UserRepository;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +24,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody UserEntity user) {
+
         if (userRepository.existsByEmail(user.getEmail())){
             return new ResponseEntity<>("Ошибка: пользователь уже существует", HttpStatusCode.valueOf(409));
         }
@@ -47,17 +47,17 @@ public class AuthController {
 
         }
         else {
-            return new ResponseEntity<> ("Неверный пароль!", HttpStatusCode.valueOf(401))
+            return new ResponseEntity<> ("Неверный пароль!", HttpStatusCode.valueOf(401));
         }
 // 4. Сгенерировать JWT
 // 5. Вернуть токен
     }
 
     // POST для реальной регистрации (позже)
-    @GetMapping("/profile")
-    public ResponseEntity createUser() {
-    // 1. Получить JWT из заголовка
-    // 2. Проверить токен
-    // 3. Вернуть данные пользователя
-    }
+//    @GetMapping("/profile")
+//    public ResponseEntity createUser() {
+//    // 1. Получить JWT из заголовка
+//    // 2. Проверить токен
+//    // 3. Вернуть данные пользователя
+//    }
 }

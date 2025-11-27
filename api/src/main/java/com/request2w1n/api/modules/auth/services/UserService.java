@@ -1,7 +1,7 @@
-package com.request2w1n.api.modules.auth.controller.services;
+package com.request2w1n.api.modules.auth.services;
 
-import com.request2w1n.api.modules.auth.controller.model.UserEntity;
-import com.request2w1n.api.modules.auth.controller.repositories.UserRepository;
+import com.request2w1n.api.modules.auth.model.UserEntity;
+import com.request2w1n.api.modules.auth.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,6 @@
-package com.request2w1n.api.modules.auth.controller;
+package com.request2w1n.api.utils;
 
-import com.request2w1n.api.modules.auth.controller.model.UserEntity;
+import com.request2w1n.api.modules.auth.model.UserEntity;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -83,6 +83,7 @@ public class JWTUtil {
     public boolean isTokenExpired(String token) {
         String[] partsToken = token.split("\\.");
         String encodedPayload = partsToken[1];
-        if ()
+//        if ()
+        return true;
     }
 }

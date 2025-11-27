@@ -1,10 +1,8 @@
-package com.request2w1n.api.modules.auth.controller.repositories;
+package com.request2w1n.api.modules.auth.repositories;
 
-import com.request2w1n.api.modules.auth.controller.model.UserEntity;
+import com.request2w1n.api.modules.auth.model.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Integer> {

@@ -1,7 +1,16 @@
-package com.request2w1n.api.modules.auth.controller.model;
+package com.request2w1n.api.modules.auth.model;
+
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 public class LoginRequest {
+
+    @NotBlank(message = "Email не может быть пустым")
+    @Email
     private String email;
+
+
     private String password;
     public LoginRequest() {}
 
