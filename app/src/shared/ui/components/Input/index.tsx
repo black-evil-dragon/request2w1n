@@ -111,18 +111,15 @@ export const Input: FC<InputProps> = ({
 
                 onBlur={handleOnBlur}
                 onFocus={() => setFocus(true)}
-                
-
             />
 
-            <div className={classNames(
+            <span className={classNames(
                 styles.message,
                 message && styles.messageShow,
-                message?.type && styles[message.type]
+                message?.type && styles[message.type] || styles['warning']
             )}>
-                {/* Обязательное поле */}
                 {message && message.text}
-            </div>
+            </span>
         </div>
     
     </>);

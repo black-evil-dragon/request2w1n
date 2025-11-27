@@ -20,7 +20,7 @@ export const ProgressBarLine: FC<{
         <div className={
             classNames(
                 styles.progress,
-                (isLoading) && styles.progressShow)
+                isLoading && styles.progressShow)
             }
             style={{ backgroundSize: `${progress}% 2px` }}
         >

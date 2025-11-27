@@ -15,9 +15,10 @@
     transition: all $tr-time ease-in-out;
 
     &--required {
-        margin-left: calcFluid(5, 5);
-        @include font-small;
+        margin-left: calcFluid(3, 4);
         color: $color-danger;
+
+        @include font-small;
     }
 
     &--moved {
@@ -46,14 +47,22 @@
     background-position: 0% 100%;
     background-repeat: no-repeat;
     background-size: 0% 2px;
+    border-right: 2px solid rgba($color-primary, 0.0);
 
-    transition: background-size $transition-time, color $transition-time ease-in-out;
+    transition:
+        background-size $transition-time,
+        color $transition-time ease-in-out,
+        border-color $tr-time*1.25 ease-in-out;
 
     &:focus,
     &--has-value {
         outline: none;
 
         background-size: 100% 2px;
+    }
+
+    &:hover, &:active {
+        border-color: rgba($color-primary, 0.2)
     }
 
 }

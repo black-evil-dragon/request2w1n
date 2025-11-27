@@ -11,8 +11,8 @@ import { UserPage } from "@pages/user";
 import { NoPage } from "@pages/404";
 import { AuthRouting } from "@pages/auth";
 
-
 export function Routing() {
+
     return (
         <BrowserRouter>
             <Routes>

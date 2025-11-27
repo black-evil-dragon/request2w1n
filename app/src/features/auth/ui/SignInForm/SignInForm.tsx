@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 
 import classNames from "classnames";
@@ -7,8 +7,15 @@ import classNames from "classnames";
 import { Input, type InputMessageType } from "@shared/ui/components/Input"
 import { ProgressBarLine, useProgress } from "@shared/ui/progress";
 
+import { useAuth } from "@features/auth";
+import { AuthAPI } from "@features/auth/api";
+
+
 import styles from '../styles/form.module.scss'
 import buttonStyles from "@styles/modules/button.module.scss";
+import type { SuccessResponse } from "@shared/api";
+import type { User } from "@entities/user";
+
 
 
 
@@ -17,35 +24,50 @@ export const SignInForm = () => {
     const [password, setPassword] = useState<string>("");
     const [messages, setMessages] = useState<{ [input: string]: InputMessageType }>({});
 
-    const {progress, isLoading, startProgress} = useProgress()
+    const { progress, isLoading, startProgress, completeProgress } = useProgress()
+    const { signIn } = useAuth()
 
 
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setMessages({})
 
-    const handleSubmit = () => {
-        if (!login || !password) {
-            const inputMessages: { [input: string]: InputMessageType } = {
-                login: null,
-                password: null
-            }
-            if (!login) {
-                inputMessages.login = {
+        if (!login) {
+            setMessages(prev => ({
+                ...prev,
+                login: {
                     text: "Введите логин",
                     type: "danger"
                 }
-
-            }
-            if (!password) {
-                inputMessages.password = {
+            }))
+        }
+        if (!password) {
+            setMessages(prev => ({
+                ...prev,
+                password: {
                     text: "Введите пароль",
                     type: "danger"
                 }
-            }
-
-            setMessages(inputMessages)
-            return
+            }))
         }
 
+        if (!login || !password) return
+
         startProgress()
+        AuthAPI.login({ login, password }).then(response => {
+            if (!response.success && response.error) {
+                completeProgress()
+                if (response.error!.fields) {
+                    setMessages(response.error.fields)
+                }
+                
+                return
+            }
+
+            completeProgress(() => { signIn((response as SuccessResponse<User>).data) })
+
+
+        })
     }
 
 
@@ -53,9 +75,12 @@ export const SignInForm = () => {
         <div className={styles.wrapper}>
             <div className={classNames(styles.title, "font-h1 font-color")}>Войти</div>
 
-            <ProgressBarLine progress={progress} isLoading={isLoading} />
-            
-            <div className={classNames(styles.form, isLoading && styles.formLoading)}>
+            <form
+                className={classNames(styles.form, isLoading && styles.formLoading)}
+                onSubmit={handleSubmit}
+            >
+                <ProgressBarLine progress={progress} isLoading={isLoading} />
+
                 <Input
                     name="login"
                     externalMessage={messages.login}
@@ -79,10 +104,10 @@ export const SignInForm = () => {
                     required
                 />
 
-                <div className={classNames(buttonStyles.button, styles.formItem)} onClick={handleSubmit}>
+                <button className={classNames(buttonStyles.button, styles.formItem)}>
                     Войти
-                </div>
-            </div>
+                </button>
+            </form>
 
             <Link to="/auth/signup" className={styles.link}>У меня нет аккаунта</Link>
         </div>

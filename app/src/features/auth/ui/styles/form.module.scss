@@ -23,6 +23,15 @@
         width: 100%;
     }
 
+    &-button {
+        position: relative;
+
+        &__message {
+            position: absolute;
+            bottom: 0;
+        }
+    }
+
     &--loading {
         opacity: .3;
         pointer-events: none;

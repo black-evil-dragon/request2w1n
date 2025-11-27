@@ -1,50 +1,85 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 export const useProgress = () => {
     const [isLoading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
 
-    const [intervalId, setIntervalId] = useState<number | null>(null)
+    const intervalRef = useRef<null | number>(null);
 
+    useEffect(() => {
+        return () => {
+            if (intervalRef.current) {
+                clearInterval(intervalRef.current);
+            }
+        };
+    }, []);
+
+    const clearCurrentInterval = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    };
 
     const createInterval = (speed: number, step: number) => {
-        setIntervalId(intervalId => setInterval(() => {
+        clearCurrentInterval()
+
+        const interval = setInterval(() => {
             setProgress(prev => {
                 if (prev >= 100) {
-                    clearInterval(intervalId!);
-                    const timeout = setTimeout(() => {
-                        setLoading(false)
-
-                        clearTimeout(timeout)
-                    }, step)
+                    clearCurrentInterval();
                     return 100;
                 }
-                return prev + .5;
+                return prev + step;
             });
-        }, speed))
+        }, speed)
+
+        intervalRef.current = interval;
     }
 
-    const startProgress = (speed = 1, step = 0.5) => {
-        setProgress(-25)
+
+    const startProgress = (speed = 10, step = 0.25) => {
+        setProgress(0)
+        setLoading(true)
 
         createInterval(speed, step)
     }
 
 
-    const stopProgress = () => {
-        if (intervalId) {
-            clearInterval(intervalId)
-        }
+    const completeProgress = (callback: CallableFunction = ()=>{}) => {
+        clearCurrentInterval();
+
+        const interval = setInterval(() => {
+            setProgress(prev => {
+                if (prev >= 100) {
+                    clearCurrentInterval();
+                    setLoading(false)
+
+                    callback()
+
+                    return 100;
+                }
+                return prev + 1;
+            });
+        }, 2)
+
+        intervalRef.current = interval;
     }
 
-    const resetProgress = () => {
-        setProgress(0)
+
+    const stopProgress = () => {
+        clearCurrentInterval();
     }
 
     const continueProgress = (speed = 1, step = 0.5) => {
         createInterval(speed, step)
     }
+
+    const resetProgress = () => {
+        setProgress(-25)
+    }
+
 
     return {
         progress,
@@ -53,6 +88,7 @@ export const useProgress = () => {
         startProgress,
         stopProgress,
         resetProgress,
-        continueProgress
+        continueProgress,
+        completeProgress
     }
 }
