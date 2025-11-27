@@ -3,7 +3,7 @@ package com.request2w1n.api.modules.auth.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-
+// чек в тг dto делаем
 public class LoginRequest {
 
     @NotBlank(message = "Email не может быть пустым")

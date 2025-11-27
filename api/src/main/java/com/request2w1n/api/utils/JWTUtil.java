@@ -1,5 +1,8 @@
 package com.request2w1n.api.utils;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.request2w1n.api.modules.auth.model.UserEntity;
 
 import javax.crypto.Mac;
@@ -16,6 +19,8 @@ public class JWTUtil {
     private static final long EXPIRATION_TIME = 86400000;
 
     String header = "{\"alg\":\"HS256\",\"typ\":\"JWT\"}";
+
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private byte[] generateHMACSHA256(String data) throws NoSuchAlgorithmException, InvalidKeyException {
 
@@ -69,21 +74,23 @@ public class JWTUtil {
         return encodedSignature.equals(partsToken[2]);
     }
     // 3. getEmailFromToken(String token) - получить email
-    public String getEmailFromToken(String token){
+    public String getEmailFromToken(String token) throws JsonProcessingException {
         String[] partsToken = token.split("\\.");
         String encodedPayload = partsToken[1];
         Base64.Decoder decoder = Base64.getDecoder();
         byte[] payloadBytes = decoder.decode(encodedPayload);
         String payloadJson = new String(payloadBytes, StandardCharsets.UTF_8);
-        int start = payloadJson.indexOf("\"email\":\"") + 9;  // +9 чтобы пропустить "email":"
-        int end = payloadJson.indexOf("\"", start);           // найти закрывающую кавычку
-        return payloadJson.substring(start, end);
+        JsonNode node = mapper.readTree(payloadJson);
+        return node.get("email").asText();
     }
     // 4. isTokenExpired(String token) - проверить expiration
-    public boolean isTokenExpired(String token) {
+    public boolean isTokenExpired(String token) throws JsonProcessingException {
         String[] partsToken = token.split("\\.");
         String encodedPayload = partsToken[1];
-//        if ()
-        return true;
+        Base64.Decoder decoder = Base64.getDecoder();
+        byte[] payloadBytes = decoder.decode(encodedPayload);
+        String payloadJson = new String(payloadBytes, StandardCharsets.UTF_8);
+        JsonNode node = mapper.readTree(payloadJson);
+        return System.currentTimeMillis() > node.get("exp").asLong();
     }
 }

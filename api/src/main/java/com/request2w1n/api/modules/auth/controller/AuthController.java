@@ -4,9 +4,13 @@ package com.request2w1n.api.modules.auth.controller;
 import com.request2w1n.api.modules.auth.model.LoginRequest;
 import com.request2w1n.api.modules.auth.model.UserEntity;
 import com.request2w1n.api.modules.auth.repositories.UserRepository;
+import com.request2w1n.api.utils.JWTUtil;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -34,8 +38,9 @@ public class AuthController {
         }
     }
 
+    //Здесь еще надо обработать исключения
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody LoginRequest request) {
+    public ResponseEntity login(@RequestBody LoginRequest request) throws NoSuchAlgorithmException, InvalidKeyException {
 // 2. Найти пользователя
         UserEntity foundUser = userRepository.findByEmail(request.getEmail());
 // 3. Проверить пароль
@@ -43,7 +48,9 @@ public class AuthController {
             return new ResponseEntity<> ("Пользователя с таким email не найдено", HttpStatusCode.valueOf(401));
         }
         else if (request.getPassword().equals(foundUser.getPassword())){
-            return new ResponseEntity <>("Успешный вход", HttpStatusCode.valueOf(200));
+            JWTUtil jwtUtil = new JWTUtil();
+            String token = jwtUtil.generateToken(foundUser);
+            return new ResponseEntity <>(token, HttpStatusCode.valueOf(200));
 
         }
         else {
