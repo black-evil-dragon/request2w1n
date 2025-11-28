@@ -10,8 +10,9 @@ public class LoginRequest {
     @Email
     private String email;
 
-
+    @NotBlank(message = "Пароль не может быть пустым")
     private String password;
+
     public LoginRequest() {}
 
     // Конструктор с параметрами (может быть потом уберем)

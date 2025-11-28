@@ -55,14 +55,14 @@ public class JWTUtil {
     }
 
     // 2. validateToken(String token) - проверить валидность
-    public boolean validateToken(String token) throws NoSuchAlgorithmException, InvalidKeyException {
+    public boolean validateToken(String token) throws NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
         String[] partsToken = token.split("\\.");
         try {
             Base64.Decoder decoder = Base64.getDecoder();
-            // Попытка декодирования строки
+            // Попытка декодирования каждой из подстрок
             for (String s : partsToken) decoder.decode(s);
         } catch (IllegalArgumentException e) {
-            // Если декодирование не удалось, какая-то из строк не валидна
+            // Если декодирование не удалось, какая-то из подстрок не валидна
             return false;
         }
 
@@ -71,7 +71,10 @@ public class JWTUtil {
         Base64.Encoder urlEncoder = Base64.getUrlEncoder().withoutPadding();
         String encodedSignature = urlEncoder.encodeToString(signature);
 
-        return encodedSignature.equals(partsToken[2]);
+        System.out.println("wait: " + encodedSignature);
+        System.out.println("get: " + partsToken[2]);
+        System.out.println("equal?: " + encodedSignature.equals(partsToken[2]));
+        return (encodedSignature.equals(partsToken[2]) && !isTokenExpired(token));
     }
     // 3. getEmailFromToken(String token) - получить email
     public String getEmailFromToken(String token) throws JsonProcessingException {
