@@ -1,0 +1,61 @@
+package com.request2w1n.api.modules.routes.model;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.gavaghan.geodesy.Ellipsoid;
+import org.gavaghan.geodesy.GeodeticCalculator;
+import org.gavaghan.geodesy.GlobalPosition;
+
+import java.util.Map;
+
+@Getter
+@Setter
+public class RoutePoint {
+    private Double latitude;
+    private Double longitude;
+    private String address;
+    private String name;
+    private String typeObject;
+    private String objectId;
+
+    public RoutePoint(){}
+
+    public RoutePoint(Double latitude, Double longitude) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        // Остальные поля останутся null
+    }
+
+    public RoutePoint(Double latitude, Double longitude, String address) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+    }
+
+    public RoutePoint(Double latitude, Double longitude, String address,
+                      String name, Integer routeId, Long estimatedStayDuration) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+        this.name = name;
+    }
+
+    public Map<String, Object> toMapMarker() {
+        return Map.of(
+                "id", this.objectId,
+                "lat", this.latitude,
+                "lng", this.longitude,
+                "name", this.name,
+                "type", this.typeObject
+        );
+    }
+    double distanceTo(RoutePoint other){
+        GeodeticCalculator geoCalc = new GeodeticCalculator();
+        Ellipsoid reference = Ellipsoid.WGS84;
+
+        GlobalPosition pointA = new GlobalPosition(this.latitude, this.longitude, 0.0);
+        GlobalPosition pointB = new GlobalPosition(other.getLatitude(), other.getLongitude(), 0.0);
+
+        return geoCalc.calculateGeodeticCurve(reference, pointA, pointB).getEllipsoidalDistance();
+    }
+}
