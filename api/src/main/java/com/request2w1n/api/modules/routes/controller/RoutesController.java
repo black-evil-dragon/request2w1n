@@ -2,6 +2,7 @@ package com.request2w1n.api.modules.routes.controller;
 
 import com.request2w1n.api.api.ApiResponse;
 import com.request2w1n.api.api.ErrorDetails;
+import com.request2w1n.api.modules.routes.model.RouteEntity;
 import com.request2w1n.api.modules.routes.model.RoutePoint;
 import com.request2w1n.api.modules.routes.model.RouteRequest;
 import com.request2w1n.api.modules.routes.model.RouteResponse;
@@ -41,10 +42,15 @@ public class RoutesController {
             return new ResponseEntity<>(response, HttpStatusCode.valueOf(400));
         }
 
-        // Создание маршрута (заглушка)
-        String newRouteId = "route_" + System.currentTimeMillis();
+        // Создание маршрута с генерацией ID
+        RouteEntity newRoute = new RouteEntity();
+        newRoute.generateId(); // Генерируем ID
+
+        // Сохраняем маршрут (пока заглушка)
+        // routeRepository.save(newRoute);
+
         Map<String, Object> createdRoute = Map.of(
-                "routeId", newRouteId,
+                "routeId", newRoute.getId(), // Используем сгенерированный ID
                 "status", "created",
                 "pointsCount", pointIds.size(),
                 "message", "Маршрут успешно создан"
