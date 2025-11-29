@@ -1,23 +1,35 @@
-import { WiDaySunny, WiNightClear } from "react-icons/wi";
+import classNames from "classnames";
+import { useEffect, type FC } from "react";
 
+import { DayIcon, NightIcon } from "@shared/icons";
 
 import { useTheme } from "../model/useTheme";
 
 
 import styles from "./theme-switcher.module.scss";
-import classNames from "classnames";
 
-export const ThemeSwitcher = () => {
-    const { theme, toggleTheme } = useTheme();
+
+interface ThemeSwitcherProps {
+    className?: string;
+}
+
+export const ThemeSwitcher: FC<ThemeSwitcherProps> = ({ className }) => {
+    const { theme, toggleTheme, initTheme } = useTheme();
+
+    
+    useEffect(() => {
+        initTheme()
+
+    }, [initTheme])
 
 
     return (
-        <div className={styles.wrapper}>
+        <div className={classNames(styles.wrapper, className && className)}>
             <div className={classNames(styles.button, theme == 'light' && styles.buttonActive)} onClick={toggleTheme}>
-                <WiDaySunny />
+                <DayIcon />
             </div>
             <div className={classNames(styles.button, theme == 'dark' && styles.buttonActive)} onClick={toggleTheme}>
-                <WiNightClear />
+                <NightIcon />
             </div>
         </div>
     );

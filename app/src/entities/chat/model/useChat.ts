@@ -1,7 +1,6 @@
 import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 
 import { CHATS } from "@shared/data/data";
-// import type { Chat } from "@entities/chat/types"
 
 
 import { chatActions } from "./slice";
