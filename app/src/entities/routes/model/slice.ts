@@ -3,9 +3,8 @@ import type { Route, RoutesState } from '../types';
 
 
 const initialState: RoutesState = {
-    activeRouteId: "",
-    ids: {},
-    list: []
+    activeRoute: null,
+    ids: {}
 };
 
 const routesSlice = createSlice({
@@ -14,18 +13,26 @@ const routesSlice = createSlice({
     reducers: {
 
         setRoute(state, action: PayloadAction<Route>) {
-            console.log(action.payload);
+            const ids = state.ids
+
+            state.ids = {
+                ...ids,
+                [action.payload.id]: action.payload
+            }
         },
 
         setRoutes(state, action: PayloadAction<Route[]>) {
-            state.ids = {};
-            state.list = []
+            const ids = state.ids;
 
             action.payload.forEach(route => {
-                state.ids[route.id] = route;
-                state.list.push(route)
+                ids[route.id] = route;
             });
 
+            state.ids = ids
+        },
+
+        setActiveRoute(state, action: PayloadAction<Route>) {
+            state.activeRoute = action.payload
         }
     }
 });

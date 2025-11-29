@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@app/store/hooks";
 import { ProgressBarLine, useProgress } from "@shared/ui/progress";
 
 
-import { isEmpty } from "@shared/utils/object-empty";
+// import { isEmpty } from "@shared/utils/object-empty";
 import { RouteAPI } from "@features/route/api";
 import { routesActions, type Route } from "@entities/routes";
 
@@ -18,7 +18,15 @@ import stylesLayout from "@styles/modules/layout.module.scss";
 
 export const RoutesList = () => {
     const dispatch = useAppDispatch();
-    const routes = useAppSelector(state => state.routes);
+    const routesList = useAppSelector(state => {
+        return Object.keys(state.routes.ids).map((id) => (state.routes.ids[id]))
+    });
+
+    const routesIds = useAppSelector(state => {
+        return Object.keys(state.routes.ids)
+    });
+
+
 
     const { progress, isLoading, startProgress, completeProgress } = useProgress()
 
@@ -27,7 +35,8 @@ export const RoutesList = () => {
         startProgress()
 
         completeProgress(async () => {
-            const response = await RouteAPI.filter(["DSE425", "AAA777"])
+            const response = await RouteAPI.filter(["AAA777", ...routesIds])
+
             if (response.success) {
                 dispatch(routesActions.setRoutes(response.data as Route[]))
                 return
@@ -37,6 +46,7 @@ export const RoutesList = () => {
 
     useEffect(() => {
         fetchRoutes()
+        console.log(routesList);
     }, [])
 
 
@@ -46,11 +56,11 @@ export const RoutesList = () => {
         </div>
         {!isLoading && <div className={styles.wrapper}>
             <div className={classNames(stylesLayout.pageContainer, styles.routes)}>
-                {isEmpty(routes.ids) ? <div className={classNames(stylesLayout.wrapper)}>
+                {!routesList ? <div className={classNames(stylesLayout.wrapper)}>
                     <div className={classNames()}>
                         Маршруты не найдены, попробуйте их добавить через <Link to="/route/find" className="font-color">поиск</Link>
                     </div>
-                </div> : routes.list.map(
+                </div> : routesList.map(
 
                     (route) => <div className={classNames(stylesLayout.wrapper, styles.routesItem)} key={`rt-${route.id}`}>
 

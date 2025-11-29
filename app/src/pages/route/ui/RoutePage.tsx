@@ -9,6 +9,7 @@ import { RoutesList } from "@features/route/routes-list";
 
 
 import stylesLayout from "@styles/modules/layout.module.scss";
+import { RouteMap } from "@features/route/route-map/ui/RouteMap";
 
 
 const RoutePage = () => {
@@ -34,7 +35,7 @@ export const RouteRouting = () => {
             <Route path="/list" element={<RoutesList />} />
 
             <Route path="/:routeId/" element={<RouteDetails />}/>
-            <Route path="/:routeId/map" element={<RouteDetails />} />
+            <Route path="/:routeId/map" element={<RouteMap />} />
             <Route path="/:routeId/plan" element={<RouteDetails />} />
 
             {/* <Route path="*" element={<Navigate to={"/404"} replace />} /> */}

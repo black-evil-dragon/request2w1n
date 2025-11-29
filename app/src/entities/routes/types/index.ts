@@ -1,4 +1,12 @@
-export type Points = string | number
+export type Point = {
+    name: string;
+    x: number;
+    y: number;
+    distance: {
+        prev?: number,
+        next?: number,
+    }
+}
 
 
 export interface RouteDetails {
@@ -8,16 +16,14 @@ export interface RouteDetails {
 export interface Route {
     id: string;
     name: string;
-    points?: Points[]
+    points?: Point[]
 }
 
 
 export interface RoutesState {
-    activeRouteId: string;
+    activeRoute: Route | null;
 
     ids: {
         [key: string]: Route;
     },
-
-    list: Route[]
 }

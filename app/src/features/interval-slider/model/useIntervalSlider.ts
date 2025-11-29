@@ -1,17 +1,24 @@
 import { useEffect, useRef, useState } from "react"
 import type { SwiperRef } from "swiper/react"
-import type { IntervalSlider } from "../types"
+
+
 import { getWindowDimensions } from "@shared/utils/windowDimension"
 
 
-interface UseIntervalSliderProps {
-    sliders: IntervalSlider[]
-}
-
-export const useIntervalSlider = ({sliders}: UseIntervalSliderProps) => {
+import type { Slider } from "../types"
 
 
-    const [intervalSliders, setIntervalSlider] = useState<IntervalSlider[]>(sliders)
+
+// interface UseIntervalSliderProps {
+//     sliders: Slider[]
+// }
+
+
+
+export const useIntervalSlider = (sliders: Slider[]) => {
+
+
+    const [intervalSliders, setIntervalSlider] = useState<Slider[]>(sliders)
     const [intervalIndex, setIntervalIndex] = useState(0)
 
     const [slider, setSlider] = useState(sliders[intervalIndex])
@@ -91,5 +98,18 @@ export const useIntervalSlider = ({sliders}: UseIntervalSliderProps) => {
     
 
 
-    return {}
+    return {
+        intervalSliders,
+        slider,
+        windowDimensions,
+
+        sliderTitle,
+        sliderRef,
+        slides,
+        intervalIndex,
+
+        sliderInAnim,
+
+        updateIntervalIndex,
+    }
 }

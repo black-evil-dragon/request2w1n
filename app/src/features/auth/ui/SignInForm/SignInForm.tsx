@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import classNames from "classnames";
 
@@ -28,6 +28,8 @@ export const SignInForm = () => {
 
     const { progress, isLoading, startProgress, completeProgress } = useProgress()
     const { signIn } = useAuth()
+
+    const navigate = useNavigate()
 
 
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -67,11 +69,12 @@ export const SignInForm = () => {
             }
 
             signIn((response as SuccessResponse<User>).data)
+            completeProgress(async () => {
+                navigate('/')
+            })
         } catch (error) {
           console.error(error);
             
-        } finally {
-            completeProgress()
         }
     }
 

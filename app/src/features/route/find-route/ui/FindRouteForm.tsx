@@ -39,24 +39,26 @@ export const FindRouteForm = () => {
             if (!response.success && response.error) {
                 if (response.error.fields) {
                     setMessages(response.error.fields)
+                    completeProgress()
                 }
                 return
             }
 
-            dispatch(routesActions.setRoute(response.data as Route))
+            completeProgress(async () => {
+                setMessages(_ => ({
+                    routeId: {
+                        text: "Нашли!",
+                        type: 'info'
+                    }
+                }))
+                dispatch(routesActions.setRoute(response.data as Route))
+            }, 100)
+
+            sleep(1000).then(() => navigate('/route/list'))
 
         } catch (error) {
             console.error(error);
 
-        } finally {
-            completeProgress(async () => setMessages(_ => ({
-                routeId: {
-                    text: "Нашли!",
-                    type: 'info'
-                }
-            })))
-
-            sleep(1000).then(() => navigate('/'))
         }
     }
 

@@ -17,6 +17,7 @@ export function Layout() {
         <header className={classNames(headerStyles.wrapper)}>
             <div className={headerStyles.navigation}>
                 <Link to={'/'} className={headerStyles.navigationItem}>Главная</Link>
+                <Link to={'/route'} className={headerStyles.navigationItem}>Маршруты</Link>
             </div>
             <ThemeSwitcher className={classNames(headerStyles.item, headerStyles.itemRight)} />
         </header>

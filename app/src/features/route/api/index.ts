@@ -40,14 +40,56 @@ export const RouteAPI = {
 
     async get(id: string): Promise<Response<Route>> {
         const mock = [{
-            id: "DSE425",
+            id: "DFE425",
             name: "Вологда - река",
-            points: [1, 2, 3]
+            points: [{
+                name: "Площадка",
+                x: 59.191499,
+                y: 39.878187,
+                distance: {
+                    next: 243,
+                }
+            }, {
+                name: "Скамейка",
+                x: 59.192474,
+                y: 39.880549,
+                distance: {
+                    next: 243 + 103,
+                }
+            }, {
+                name: "Красивое дерево",
+                x: 59.191032,
+                y: 39.877579,
+                distance: {
+                    // next: 314,
+                }
+            }]
         },
         {
-            id: "DSE425",
+            id: "AAA777",
             name: "Осановская тайна",
-            points: [1, 2, 3, 4, 5]
+            points: [{
+                name: "Площадка",
+                x: 59.191499,
+                y: 39.878187,
+                distance: {
+                    next: 135,
+                }
+            }, {
+                name: "Скамейка",
+                x: 59.192474,
+                y: 39.880549,
+                distance: {
+                    next: 143,
+                }
+            }, {
+                name: "Красивое дерево",
+                x: 59.191032,
+                y: 39.877579,
+                distance: {
+                    // next: 314,
+                }
+            }]
         }]
 
         const route = mock.find(r => r.id === id)
@@ -72,7 +114,7 @@ export const RouteAPI = {
 
     async filter(ids: string[]): Promise<Response<Route[] | []>> {
         const mock = [{
-            id: "DSE425",
+            id: "DFE425",
             name: "Вологда - река",
             points: [1, 2, 3]
         },
@@ -92,7 +134,7 @@ export const RouteAPI = {
             points: [1, 2, 3, 4, 5]
         }]
 
-        const routes = mock.filter(r => true)
+        const routes = mock.filter(r => ids.includes(r.id))
 
 
         if (routes) {

@@ -1,5 +1,5 @@
 import { useState, type Dispatch, type FormEvent, type SetStateAction } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import classNames from "classnames";
 
@@ -24,6 +24,9 @@ export const SignUpForm = () => {
 
     // Progress
     const { progress, isLoading, startProgress, completeProgress } = useProgress();
+
+
+    const navigate = useNavigate()
 
 
     const handleChange = (value: string, setValue: Dispatch<SetStateAction<string>>) => {
@@ -77,13 +80,18 @@ export const SignUpForm = () => {
 
                 if (response.error.fields) {
                     setMessages(response.error.fields)
+                    
                 }
+
+                return completeProgress()
             }
+
+            completeProgress(async () => {
+                navigate('/')
+            })
         } catch (error) {
             console.error(error);
 
-        } finally {
-            completeProgress()
         }
     }
 
@@ -134,7 +142,7 @@ export const SignUpForm = () => {
 
 
                 <button className={classNames(buttonStyles.button, styles.formItem, styles.formButton)}>
-                    Регистрация
+                    {isLoading ? "Записываем..." : "Регистрация"}
                 </button>
             </form>
 
