@@ -25,7 +25,7 @@ public class RouteEntity {
     @Transient // Не хранится в БД
     private static String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-    @Transient // Не хранить в БД
+    @Transient // Не хранится в БД
     private static int order = 2;
 
     public RouteEntity() {

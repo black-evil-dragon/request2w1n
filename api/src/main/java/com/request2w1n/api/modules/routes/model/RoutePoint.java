@@ -2,6 +2,7 @@ package com.request2w1n.api.modules.routes.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.gavaghan.geodesy.Ellipsoid;
@@ -13,44 +14,17 @@ import java.util.Map;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 public class RoutePoint {
     private Double latitude;
     private Double longitude;
     private String address;
     private String name;
     private String typeObject;
+    private boolean important = false;
 
     @Id
     private String objectId;
-
-    public RoutePoint(){}
-
-    public RoutePoint(Double latitude, Double longitude) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        // Остальные поля останутся null
-    }
-
-    public RoutePoint(Double latitude, Double longitude, String address) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.address = address;
-    }
-
-    public RoutePoint(Double latitude, Double longitude, String address, String name) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.address = address;
-        this.name = name;
-    }
-
-    public RoutePoint(Double latitude, Double longitude, String address,
-                      String name, Integer routeId, Long estimatedStayDuration) {
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.address = address;
-        this.name = name;
-    }
 
     public Map<String, Object> toMapMarker() {
         return Map.of(
@@ -58,7 +32,8 @@ public class RoutePoint {
                 "lat", this.latitude,
                 "lng", this.longitude,
                 "name", this.name,
-                "type", this.typeObject
+                "type", this.typeObject,
+                "important", this.important
         );
     }
     double distanceTo(RoutePoint other){

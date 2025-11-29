@@ -49,9 +49,13 @@ public class RoutesController {
         // Сохраняем маршрут (пока заглушка)
         // routeRepository.save(newRoute);
 
+        // получаем важные точки
+        List<String> importantPointIds = routeService.getImportantPointIds();
+
         Map<String, Object> createdRoute = Map.of(
                 "routeId", newRoute.getId(), // Используем сгенерированный ID
                 "status", "created",
+                "importantPoints", importantPointIds, // Список ID важных точек
                 "pointsCount", pointIds.size(),
                 "message", "Маршрут успешно создан"
         );

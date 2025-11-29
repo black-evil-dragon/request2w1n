@@ -10,6 +10,7 @@ public class RouteRequest {
 
     List<String> selectedPoints;
     private Double maxRouteLength; // D - максимальная длина маршрута в метрах
+    List<String> importantPoints; // список с важными для посещения точек
 
     public RouteRequest() {}
 

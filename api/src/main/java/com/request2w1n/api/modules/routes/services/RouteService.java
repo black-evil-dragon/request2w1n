@@ -5,6 +5,7 @@ import com.request2w1n.api.modules.routes.model.RouteRequest;
 import com.request2w1n.api.modules.routes.model.RouteResponse;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,6 +18,13 @@ public class RouteService {
     }
 
     public RouteResponse optimizeRoute(RouteRequest request){
+        List<String> importantIds = getImportantPointIds();
+        List<String> allPoints = request.getSelectedPoints();
+        //    - Гарантировать посещение ВСЕХ важных точек или выводить, что это невозможно при заданном D
+        //    - Посещение остальных точек - по возможности
+        //    - Минимизировать общее расстояние
+        //    - Уложиться в D метров
+
         // Заглушка для оптимизации
         RouteResponse response = new RouteResponse();
         response.setRouteId("temp_route_" + System.currentTimeMillis());
@@ -38,5 +46,17 @@ public class RouteService {
 
     public List<RoutePoint> getAllPoints(){
         return pointService.getAllPoints();
+    }
+
+    public List<String> getImportantPointIds() {
+        List<RoutePoint> allPoints = pointService.getAllPoints();
+        List<String> importantIds = new ArrayList<>();
+
+        for (RoutePoint point : allPoints) {
+            if (point.isImportant()) {
+                importantIds.add(point.getObjectId());
+            }
+        }
+        return importantIds;
     }
 }
