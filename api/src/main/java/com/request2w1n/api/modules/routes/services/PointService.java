@@ -15,4 +15,15 @@ public class PointService {
                 new RoutePoint(59.2229, 39.8790, "Вологда", "Памятник")
         );
     }
+    public RoutePoint getPointById(String id) {
+        List<RoutePoint> allPoints = getAllPoints();
+
+        for (int i = 0; i < allPoints.size(); i++) {
+            RoutePoint point = allPoints.get(i);
+            if (id.equals(point.getObjectId())) {
+                return point;
+            }
+        }
+        return null;
+    }
 }

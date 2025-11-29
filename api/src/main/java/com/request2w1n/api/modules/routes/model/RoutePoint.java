@@ -36,7 +36,7 @@ public class RoutePoint {
                 "important", this.important
         );
     }
-    double distanceTo(RoutePoint other){
+    public double distanceTo(RoutePoint other){
         GeodeticCalculator geoCalc = new GeodeticCalculator();
         Ellipsoid reference = Ellipsoid.WGS84;
 

@@ -20,6 +20,14 @@ public class RouteService {
     public RouteResponse optimizeRoute(RouteRequest request){
         List<String> importantIds = getImportantPointIds();
         List<String> allPoints = request.getSelectedPoints();
+        OptimizeService optimizeService = new OptimizeService();
+        List<String> result = optimizeService.findOptimalRoute(
+                allPoints.size(),
+                request.getMaxRouteLength(),
+                allPoints,
+                importantIds
+                );
+
         //    - Гарантировать посещение ВСЕХ важных точек или выводить, что это невозможно при заданном D
         //    - Посещение остальных точек - по возможности
         //    - Минимизировать общее расстояние
