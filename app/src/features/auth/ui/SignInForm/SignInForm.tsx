@@ -6,15 +6,17 @@ import classNames from "classnames";
 
 import { Input, type InputMessageType } from "@shared/ui/components/Input"
 import { ProgressBarLine, useProgress } from "@shared/ui/progress";
+import type { SuccessResponse } from "@shared/api";
 
 import { useAuth } from "@features/auth";
 import { AuthAPI } from "@features/auth/api";
 
-
-import styles from '../styles/form.module.scss'
-import buttonStyles from "@styles/modules/button.module.scss";
-import type { SuccessResponse } from "@shared/api";
 import type { User } from "@entities/user";
+
+
+import formStyles from '@styles/modules/form.module.scss'
+import buttonStyles from "@styles/modules/button.module.scss";
+
 
 
 
@@ -28,7 +30,7 @@ export const SignInForm = () => {
     const { signIn } = useAuth()
 
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         setMessages({})
 
@@ -54,29 +56,32 @@ export const SignInForm = () => {
         if (!login || !password) return
 
         startProgress()
-        AuthAPI.login({ login, password }).then(response => {
+
+        try {
+            const response = await AuthAPI.login({ login, password })
             if (!response.success && response.error) {
-                completeProgress()
                 if (response.error!.fields) {
                     setMessages(response.error.fields)
                 }
-                
                 return
             }
 
-            completeProgress(() => { signIn((response as SuccessResponse<User>).data) })
-
-
-        })
+            signIn((response as SuccessResponse<User>).data)
+        } catch (error) {
+          console.error(error);
+            
+        } finally {
+            completeProgress()
+        }
     }
 
 
     return (<>
-        <div className={styles.wrapper}>
-            <div className={classNames(styles.title, "font-h1 font-color")}>Войти</div>
+        <div className={formStyles.wrapper}>
+            <div className={classNames(formStyles.title, "font-h1 font-color")}>Войти</div>
 
             <form
-                className={classNames(styles.form, isLoading && styles.formLoading)}
+                className={classNames(formStyles.form, isLoading && formStyles.formLoading)}
                 onSubmit={handleSubmit}
             >
                 <ProgressBarLine progress={progress} isLoading={isLoading} />
@@ -88,7 +93,7 @@ export const SignInForm = () => {
                     placeholder="Логин"
                     onChange={setLogin}
 
-                    className={styles.formItem}
+                    className={formStyles.formItem}
                     required
                 />
 
@@ -100,16 +105,16 @@ export const SignInForm = () => {
                     placeholder="Пароль"
                     onChange={setPassword}
 
-                    className={styles.formItem}
+                    className={formStyles.formItem}
                     required
                 />
 
-                <button className={classNames(buttonStyles.button, styles.formItem)}>
+                <button className={classNames(buttonStyles.button, formStyles.formItem)}>
                     Войти
                 </button>
             </form>
 
-            <Link to="/auth/signup" className={styles.link}>У меня нет аккаунта</Link>
+            <Link to="/auth/signup" className={formStyles.link}>У меня нет аккаунта</Link>
         </div>
     </>);
 };

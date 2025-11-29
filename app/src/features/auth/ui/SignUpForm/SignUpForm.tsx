@@ -7,7 +7,7 @@ import { ProgressBarLine, useProgress } from "@shared/ui/progress";
 import { Input, type InputMessageType } from "@shared/ui/components/Input"
 
 
-import styles from '../styles/form.module.scss'
+import styles from '@styles/modules/form.module.scss'
 import buttonStyles from "@styles/modules/button.module.scss";
 import { AuthAPI } from "@features/auth/api";
 
@@ -35,7 +35,7 @@ export const SignUpForm = () => {
     }
 
 
-    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
         if (!login) {
@@ -71,17 +71,20 @@ export const SignUpForm = () => {
 
 
         startProgress()
-
-        AuthAPI.register({ login, password }).then(response => {
+        try {
+            const response = await AuthAPI.register({ login, password })
             if (!response.success && response.error) {
 
                 if (response.error.fields) {
                     setMessages(response.error.fields)
                 }
             }
+        } catch (error) {
+            console.error(error);
 
+        } finally {
             completeProgress()
-        })
+        }
     }
 
     return (<>

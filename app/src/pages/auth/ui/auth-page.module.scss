@@ -1,4 +1,12 @@
-.header {}
+
+
+.header {
+    &-item {
+        &--right {
+            margin-left: auto;
+        }
+    }
+}
 
 
 .wrapper {

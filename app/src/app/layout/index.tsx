@@ -1,28 +1,25 @@
-import { Outlet } from "react-router-dom";
-import { useEffect } from "react";
+import { Link, Outlet } from "react-router-dom";
+import classNames from "classnames";
 
 
 // import { Header } from "@app/layout/Header";
 import { Footer } from '@app/layout/Footer';
+import { ThemeSwitcher } from "@features/theme";
 
 
-import { useAuth } from "@features/auth";
-
+import headerStyles from "@styles/modules/header.module.scss";
 
 
 export function Layout() {
-    const { user, signOut } = useAuth()
-
-    useEffect(() => {
-        if (!user.id) {
-            signOut()
-        }
-    }, [])
-
 
     return (<>
         {/* App header component */}
-        {/* <Header /> */}
+        <header className={classNames(headerStyles.wrapper)}>
+            <div className={headerStyles.navigation}>
+                <Link to={'/'} className={headerStyles.navigationItem}>Главная</Link>
+            </div>
+            <ThemeSwitcher className={classNames(headerStyles.item, headerStyles.itemRight)} />
+        </header>
 
         {/* App content */}
         <div className="app-content">

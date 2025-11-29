@@ -56,12 +56,12 @@ export const Input: FC<InputProps> = ({
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event?.target.value)
-        onChange(event?.target.value)
-
         if (onChangeEvent) {
             onChangeEvent(event)
         }
+        
+        setValue(event?.target.value)
+        onChange(event?.target.value)
 
         if (message?.text) {
             setMessage(null)

@@ -1,26 +1,15 @@
-import { Link, Navigate, Outlet, Route, Routes } from "react-router-dom"
+import { Link, Navigate, Route, Routes } from "react-router-dom"
 import classNames from "classnames";
 
 import { SignInForm, SignUpForm } from "@features/auth";
-import { ThemeSwitcher } from "@features/theme";
+
 
 import styles from "./auth-page.module.scss"
 
+
 import buttonStyles from "@styles/modules/button.module.scss";
 
-const AuthLayout = () => {
-    return (<>
-        <header className={classNames(styles.header)}>
-            <ThemeSwitcher />
-        </header>
 
-        
-
-        <div className={classNames(styles.wrapper)}>
-            <Outlet />
-        </div>
-    </>)
-}
 
 const AuthHome = () => {
     return (<>
@@ -38,12 +27,9 @@ const AuthHome = () => {
 export const AuthRouting = () => {
     return (<>
         <Routes>
-            <Route path="" element={<AuthLayout />}>
-                <Route path="" element={<AuthHome />} />
-                <Route path="signin" element={<SignInForm />} />
-                <Route path="signup" element={<SignUpForm />} />
-            </Route>
-
+            <Route path="" element={<AuthHome />} />
+            <Route path="signin" element={<SignInForm />} />
+            <Route path="signup" element={<SignUpForm />} />
 
             <Route path="*" element={<Navigate to={"/auth"} replace />} />
         </Routes>

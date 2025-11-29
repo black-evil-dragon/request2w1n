@@ -28,8 +28,6 @@ export interface Response<T = unknown> {
             [key: string]: InputMessageType
         }
     };
-
-    timestamp?: string;
 }
 
 export interface SuccessResponse<T> extends Response {

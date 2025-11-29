@@ -1,7 +1,8 @@
-import { useAppDispatch, useAppSelector } from "@app/store/hooks";
-import type { User } from "@entities/user";
-import { userActions } from "@entities/user";
 import { useNavigate } from "react-router-dom";
+
+import { useAppDispatch, useAppSelector } from "@app/store/hooks";
+import { userActions, type User } from "@entities/user";
+
 
 
 export const useAuth = () => {
@@ -13,7 +14,6 @@ export const useAuth = () => {
         dispatch(
             userActions.setUser(data)
         )
-        navigate('/')
     }
 
     const signOut = () => {

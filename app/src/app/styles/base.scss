@@ -11,7 +11,7 @@ body {
 
     font-size: calcFluid(14, 16);
 
-    @include theme;
+    @include theme-default;
 
     #root {
         min-height: 100vh;
@@ -22,6 +22,8 @@ body {
         .app {
 
             &-content {
+                position: relative;
+
                 display: flex;
                 flex-direction: column;
                 flex: 1;
@@ -34,4 +36,22 @@ body {
 button {
     outline: none;
     border: none;
+}
+
+
+input {
+    outline: none;
+}
+
+input {
+    &:-webkit-autofill {
+        @each $theme, $colors in $theme-colors {
+            [data-theme="#{$theme}"] & {
+                -webkit-box-shadow: inset 0 0 0 50px #{theme-color("page", $theme)} !important;
+                -webkit-text-fill-color: #{theme-color("text", $theme)} !important;
+                color: #999 !important;
+                transition: all $tr-time ease-in-out;
+            }
+        }
+    }
 }

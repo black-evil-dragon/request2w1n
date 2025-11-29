@@ -9,9 +9,13 @@ import styles from './progress-bar-line.module.scss'
 export const ProgressBarLine: FC<{
     progress: number,
     isLoading: boolean
+
+    className?: string,
 }> = ({
     progress,
-    isLoading
+    isLoading,
+
+    className = ""
 }) => {
 
 
@@ -20,7 +24,9 @@ export const ProgressBarLine: FC<{
         <div className={
             classNames(
                 styles.progress,
-                isLoading && styles.progressShow)
+                isLoading && styles.progressShow,
+                className
+            )
             }
             style={{ backgroundSize: `${progress}% 2px` }}
         >

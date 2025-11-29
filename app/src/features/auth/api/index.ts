@@ -59,7 +59,6 @@ export const AuthAPI = {
                 data: {
                     id: "434113413",
                     login: "test",
-                    name: "Test test",
                 }
             })
         }

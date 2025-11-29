@@ -35,24 +35,32 @@ export class ApiClient {
                 // }
                 return config;
             },
-            (error) => Promise.resolve(error)
+            (error) => Promise.reject(error)
         );
 
         this.axiosInstance.interceptors.response.use(
             (response: AxiosResponse<Response>) => {
-
                 return response;
             },
             (error: AxiosError) => {
-                if (error.response) return error.response;
+                if (error.response) {
+                    return Promise.reject({
+                        success: false,
+                        code: error.response.status,
+                        error: {
+                            text: "Ошибка сервера",
+                        },
+                    });
+                }
 
-                return {
+                // Для сетевых ошибок
+                return Promise.reject({
                     success: false,
+                    code: 0,
                     error: {
                         text: "Неизвестная ошибка. Нет ответа"
                     },
-                    timestamp: '',
-                }
+                });
             }
         );
     }

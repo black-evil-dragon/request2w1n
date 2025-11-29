@@ -8,11 +8,20 @@
 * 			        THEME
 * _____________________________________________
 */
-@mixin theme($type: "page") {
+@mixin theme-default($type: "page") {
     @each $theme, $colors in $theme-colors {
         [data-theme="#{$theme}"] & {
             color: map.get($colors, "text");
             background-color: map.get($colors, $type);
+        }
+    }
+}
+
+
+@mixin theme-mixin {
+    @each $theme, $colors in $theme-colors {
+        [data-theme="#{$theme}"] & {
+            @content;
         }
     }
 }
@@ -26,10 +35,16 @@
     }
 }
 
-@mixin theme-color($property, $type: 'text', $alpha: 1.0) {
+@mixin theme-color($property, $type: 'text', $alpha: 1.0, $important: false) {
     @each $theme, $colors in $theme-colors {
         [data-theme="#{$theme}"] & {
-            #{$property}: rgba($color: theme-color($type, $theme), $alpha: $alpha);
+            @if $important {
+                #{$property}: rgba($color: theme-color($type, $theme), $alpha: $alpha) !important;
+            }
+
+            @else {
+                #{$property}: rgba($color: theme-color($type, $theme), $alpha: $alpha)
+            }
         }
     }
 }
@@ -128,6 +143,27 @@
     }
 }
 
+/* ___________________________________________
+* 			     Layout
+* _____________________________________________
+*/
+@mixin pageContainer($mx-w: 1600, $mn-w: 350, $padding-tb: calcFluid(15, 30), $padding-lr: calcFluid(15, 25)) {
+    max-width: calcFluid($mn-w, $mx-w);
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+
+    padding: $padding-tb 0;
+
+    @include mxw_576 {
+        max-width: calcFluid($mn-w, calc($mx-w / 2), $max-vw: 576px);
+
+        padding-left: $padding-lr;
+        padding-right: $padding-lr;
+    }
+}
+
 
 
 /* ___________________________________________
@@ -185,29 +221,29 @@
         "default": calcFluid(10, 10) calcFluid(27, 37),
     );
 
-    cursor: pointer;
+cursor: pointer;
 
-    // display and layout
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+// display and layout
+display: inline-flex;
+align-items: center;
+justify-content: center;
 
-    padding: map.get($sizes, $size);
-
-
-    // text
-    text-decoration: none;
+padding: map.get($sizes, $size);
 
 
-    // Design
-    border-radius: $border-radius;
+// text
+text-decoration: none;
 
 
-    // Animation and mod-s
-    transition: all $tr-time ease-in-out;
-    @include no-underline;
+// Design
+border-radius: $border-radius;
 
-    @content;
+
+// Animation and mod-s
+transition: all $tr-time ease-in-out;
+@include no-underline;
+
+@content;
 }
 
 @mixin button-background($border-color: $color-primary,

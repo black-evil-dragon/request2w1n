@@ -47,22 +47,28 @@ export const useProgress = () => {
     }
 
 
-    const completeProgress = (callback: CallableFunction = ()=>{}) => {
+    const completeProgress = (callback: () => Promise<void> = async()=>{}, sleep: number = 0) => {
         clearCurrentInterval();
 
         const interval = setInterval(() => {
             setProgress(prev => {
                 if (prev >= 100) {
                     clearCurrentInterval();
-                    setLoading(false)
 
-                    callback()
+
+                    const timeout = setTimeout(() => {
+                        callback().then(function () {
+                            setLoading(false)
+                            clearTimeout(timeout)
+                        })
+                        
+                    }, sleep)
 
                     return 100;
                 }
                 return prev + 1;
             });
-        }, 2)
+        }, 5)
 
         intervalRef.current = interval;
     }
