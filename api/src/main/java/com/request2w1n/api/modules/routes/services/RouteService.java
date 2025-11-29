@@ -1,61 +1,42 @@
 package com.request2w1n.api.modules.routes.services;
 
-import com.request2w1n.api.modules.routes.model.RouteEntity;
 import com.request2w1n.api.modules.routes.model.RoutePoint;
 import com.request2w1n.api.modules.routes.model.RouteRequest;
 import com.request2w1n.api.modules.routes.model.RouteResponse;
-import com.request2w1n.api.modules.routes.repositories.RouteRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class RouteService {
 
-    private final RouteRepository routeRepository;
+    private final PointService pointService;
 
-    public RouteService(RouteRepository routeRepository) {
-        this.routeRepository = routeRepository;
+    public RouteService(PointService pointService) {
+        this.pointService = pointService;
     }
 
-    RouteResponse optimizeRoute(RouteRequest request){
-        // заглушка. Тут должно быть задание 1
-        return routeRepository.optimizeRoute(request);
-
+    public RouteResponse optimizeRoute(RouteRequest request){
+        // Заглушка для оптимизации
+        RouteResponse response = new RouteResponse();
+        response.setRouteId("temp_route_" + System.currentTimeMillis());
+        response.setStatus("OPTIMIZED");
+        response.setPointsCount(request.getSelectedPoints().size());
+        response.setTotalDistance(1500.0);
+        return response;
     }
 
-    public RouteResponse getRouteById(String routeId) {
-        // Поиск маршрута по ID
-        return routeRepository.findById(routeId);
+    public RouteResponse findById(String routeId) {
+        // Заглушка для поиска по ID
+        RouteResponse response = new RouteResponse();
+        response.setRouteId(routeId);
+        response.setStatus("FOUND");
+        response.setPointsCount(3);
+        response.setTotalDistance(2000.0);
+        return response;
     }
 
-    List<RouteEntity> findByStatus(String status){
-        return routeRepository.findByStatus(status);
-    }
-
-    boolean existsByPointsContaining(RoutePoint point){
-        return routeRepository.existsByPointsContaining(point);
-    }
-
-    String saveRoute(RouteResponse route){
-        return routeRepository.saveRoute(route);
-    }
-
-    boolean existsByLatAndLong(Double lat, Double lng){
-        return routeRepository.existsByLatAndLong(lat,lng);
-    }
-
-    List<RoutePoint> getPointsByIds(List<String> ids){
-        return routeRepository.getPointsByIds(ids);
-    }
-
-    RoutePoint getPointById(String id){
-        return routeRepository.getPointById(id);
-    }
-
-    List<RoutePoint> getAllPoints(){
-        return routeRepository.getAllPoints();
-    }
-
-    boolean existsByLatAndLong(){
-        return routeRepository.existsByLatAndLong();
+    public List<RoutePoint> getAllPoints(){
+        return pointService.getAllPoints();
     }
 }

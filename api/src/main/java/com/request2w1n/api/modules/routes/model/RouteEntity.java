@@ -7,22 +7,18 @@ import lombok.Setter;
 import lombok.Getter;
 
 @Entity
-@Setter
 @Getter
+@Setter
 @Table(name = "routes")
 public class RouteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ElementCollection
+    @OneToMany(cascade = CascadeType.ALL)
     private List<RoutePoint> points;
 
     private Double totalDistance;
     private Integer pointsCount;
     private String status;
-
-    RouteResponse toRouteResponse(){ // преобразование для API (надо ли)
-
-    }
 }

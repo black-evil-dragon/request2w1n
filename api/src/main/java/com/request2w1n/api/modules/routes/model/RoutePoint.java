@@ -1,5 +1,7 @@
 package com.request2w1n.api.modules.routes.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
 import org.gavaghan.geodesy.Ellipsoid;
@@ -8,6 +10,7 @@ import org.gavaghan.geodesy.GlobalPosition;
 
 import java.util.Map;
 
+@Entity
 @Getter
 @Setter
 public class RoutePoint {
@@ -16,6 +19,8 @@ public class RoutePoint {
     private String address;
     private String name;
     private String typeObject;
+
+    @Id
     private String objectId;
 
     public RoutePoint(){}
@@ -30,6 +35,13 @@ public class RoutePoint {
         this.latitude = latitude;
         this.longitude = longitude;
         this.address = address;
+    }
+
+    public RoutePoint(Double latitude, Double longitude, String address, String name) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.address = address;
+        this.name = name;
     }
 
     public RoutePoint(Double latitude, Double longitude, String address,

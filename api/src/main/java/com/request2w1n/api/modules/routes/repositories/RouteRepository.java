@@ -6,16 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface RouteRepository extends JpaRepository<@NotNull RouteEntity, @NotNull Long> {
-    RouteResponse optimizeRoute(RouteRequest request);
-    boolean existsByLatAndLong();
-    List<RoutePoint> getAllPoints();
-    RoutePoint getPointById(String id);
-    List<RoutePoint> getPointsByIds(List<String> ids);
-    boolean existsByLatAndLong(Double lat, Double lng);
-    String saveRoute(RouteResponse route);
-
-    RouteResponse findById(String routeId);
+public interface RouteRepository extends JpaRepository<RouteEntity, Long> {
     List<RouteEntity> findByStatus(String status);
     boolean existsByPointsContaining(RoutePoint point);
 }

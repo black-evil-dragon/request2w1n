@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Setter
+@Getter
 public class RouteResponse {
     String routeId;
     List<RoutePoint> optimizedPoints;
