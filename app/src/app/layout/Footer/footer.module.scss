@@ -1,8 +1,18 @@
 .wrapper {
-    padding: calcFluid(20, 40) 0;
+    display: flex;
+    justify-content: space-between;
+    gap: calcFluid(5, 50);
+
+    padding: calcFluid(5, 20) 0;
+
+    @include mxw_576 {
+        padding: calcFluid(20, 40) 0;
+        flex-direction: column;
+    }
 
     .links {
         display: flex;
+
         justify-content: center;
         align-items: center;
         flex-wrap: wrap;
@@ -10,7 +20,7 @@
         gap: calcFluid(2, 5);
 
         text-align: center;
-
-        @include theme-text-color(.5);
+        @include font-small;
+        @include theme-text-color(.4);
     }
 }

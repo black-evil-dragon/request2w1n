@@ -2,12 +2,18 @@ import { configureStore } from '@reduxjs/toolkit';
 
 
 import { chatReducer } from '@entities/chat';
+import { userReducer } from '@entities/user';
+import { routesReducer } from '@entities/routes';
 
 
 
 export const store = configureStore({
     reducer: {
-        chat: chatReducer
+        user: userReducer,
+        chat: chatReducer,
+
+        routes: routesReducer
+
     },
 });
 

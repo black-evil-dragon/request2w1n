@@ -11,7 +11,7 @@ export function App() {
 
     React.useEffect(() => {
         const timer = setTimeout(() => {
-            document.body.style.setProperty('transition', 'background-color .3s ease, color .3s ease');
+            // document.body.style.setProperty('transition', 'background-color .3s ease, color .3s ease');
         }, 100);
 
         return () => clearTimeout(timer);

@@ -4,7 +4,7 @@ import { UserProfileCard } from "@entities/user";
 import { useChat } from "@entities/chat/";
 
 //* Shared
-import { previewText } from "@shared/libs/previewText";
+import { previewText } from "@shared/utils/previewText";
 import { CompactCard } from "@shared/ui/components";
 import { ItemsContainer, stylesItemsContainer } from "@shared/ui/layout/";
 

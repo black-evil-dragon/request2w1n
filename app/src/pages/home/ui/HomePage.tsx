@@ -1,15 +1,17 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
+
+import classNames from 'classnames';
+
+import styles from './home-page.module.scss'
 
 
-import { Profile } from '@widgets/profile/';
-import { ChatModal } from '@entities/chat/';
-
-
-
-export const HomePage: React.FunctionComponent = () => {
+export const HomePage = () => {
     return (<>
-        <Profile />
-
-        <ChatModal />
+        <div className={classNames(styles.wrapper)}>
+            <div className={styles.links}>
+                <Link to={'/route'} className={styles.linksItem}>Работа с маршрутами</Link>
+                <Link to={'/auth'} className={styles.linksItem}>Авторизации</Link>
+            </div>
+        </div>
     </>);
-}
+};

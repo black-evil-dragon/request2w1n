@@ -1,0 +1,39 @@
+
+
+.header {
+    &-item {
+        &--right {
+            margin-left: auto;
+        }
+    }
+}
+
+
+.wrapper {
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    flex: 1;
+
+    gap: calcFluid(15, 45);
+
+    .title {}
+
+    .links {
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        gap: calcFluid(10, 25);
+
+        &__item {
+            &--colored {
+
+            }
+        }
+    }
+}

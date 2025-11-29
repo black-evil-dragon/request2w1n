@@ -6,10 +6,7 @@
     padding: calcFluid(5, 10);
 
     border-radius: $border-radius;
-    @include theme("page");
-
-
-
+    @include theme-default("page");
 
 
     .content {

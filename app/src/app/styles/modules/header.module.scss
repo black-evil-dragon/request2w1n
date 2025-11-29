@@ -1,0 +1,18 @@
+.wrapper {
+    @include pageContainer;
+
+    display: flex;
+    align-items: center;
+}
+
+.item {
+    &--right {
+        margin-left: auto;
+    }
+}
+
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: calcFluid(5, 10);
+}

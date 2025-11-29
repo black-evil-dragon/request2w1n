@@ -1,4 +1,4 @@
-package com.request2w1n.api.echo.controller;
+package com.request2w1n.api.modules.echo.controller;
 
 
 

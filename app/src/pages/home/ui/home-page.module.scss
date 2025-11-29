@@ -1,0 +1,24 @@
+.wrapper {
+    @include pageContainer;
+
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    flex: 1;
+}
+
+
+.links {
+    display: flex;
+    flex-direction: column;
+    
+    gap: calcFluid(10, 15);
+
+    &-item {
+        @include button-default {
+            @include button-background;
+        }
+    }
+}
