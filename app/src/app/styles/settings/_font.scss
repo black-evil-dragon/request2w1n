@@ -32,9 +32,17 @@
         }
     }
 
-
     &-color {
         @include font-color;
+    }
+
+    &-small {
+        @include font-small;
+    }
+
+
+    &--no-underline {
+        @include no-underline;
     }
 }
 

@@ -1,0 +1,1 @@
+export { AuthRouting } from './ui/AuthPage'
